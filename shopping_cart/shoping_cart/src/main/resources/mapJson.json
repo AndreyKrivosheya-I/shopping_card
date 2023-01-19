@@ -1,0 +1,14 @@
+{
+  "HeadPhones" : [ {
+    "price" : 350,
+    "amount" : 4
+  } ],
+  "Phones" : [ {
+    "price" : 150,
+    "amount" : 3
+  } ],
+  "LapTop" : [ {
+    "price" : 500,
+    "amount" : 5
+  } ]
+}
