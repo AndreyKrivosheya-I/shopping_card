@@ -1,0 +1,17 @@
+{
+  "LAPTOP" : {
+    "price" : 500.0,
+    "amount" : 4,
+    "typeOfDevices" : "LAPTOP"
+  },
+  "PHONE" : {
+    "price" : 100.0,
+    "amount" : 6,
+    "typeOfDevices" : "PHONE"
+  },
+  "HEADPHONE" : {
+    "price" : 50.0,
+    "amount" : 0,
+    "typeOfDevices" : "HEADPHONE"
+  }
+}
