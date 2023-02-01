@@ -1,10 +1,12 @@
 package basket;
 
 import shoppingCart.Devices;
+import shoppingCart.TypeOfDevices;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class CustomersBasket {
 
@@ -52,6 +54,13 @@ public class CustomersBasket {
 
     public List<Devices> getCart() {
         return cart;
+    }
+
+    public int getAmountByType(TypeOfDevices type){
+        return Objects.requireNonNull(cart.stream()
+                .filter(d -> d.getTypeOfDevices() == type)
+                .findFirst()
+                .orElse(null)).getAmount();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package basket;
 
+import dataWorker.sql.SQLWorker;
 import shoppingCart.Devices;
 import shoppingCart.TypeOfDevices;
 
@@ -11,19 +12,17 @@ import java.util.*;
 public class ChooseDevices {
 
     /* Info about device into storage. Use for communicate with JSON/SQL file */
-    private final Map<Object, Object> mapStorage = new HashMap<>();
+    private Map<Object, Object> mapStorage = new HashMap<>();
 
     /* Info about device into cart */
     private CustomersBasket customersBasket;
 
-    public ChooseDevices(){
-        /* Read "storage file" by JSON (SQL) for fill mapStorage */
-        defaultFillStorage();
-        // fillStorageFromJSON();
+    /* Class for connect (select and update) info from sql file */
+    private SQLWorker sqlWorker;
 
-        /* Read "cart file" by JSON (SQL) for fill customersBasket */
-        defaultFillCart();
-        // fillCartFromJSON();
+    public ChooseDevices(){
+        fillDataFromSQL();
+        fillDataDefault();
     }
 
     public Map<Object, Object> choose(){
@@ -62,8 +61,13 @@ public class ChooseDevices {
                     continue;
                 }
 
-                ((Devices) mapStorage.get(typeDevise)).setAmount(((Devices) mapStorage.get(typeDevise)).getAmount() - amount);
-                customersBasket.add(new Devices(typeDevise, ((Devices) mapStorage.get(typeDevise)).getPrice(), amount));
+                if(updateStorageAndCartSQL(typeDevise, amount)){
+                    ((Devices) mapStorage.get(typeDevise)).setAmount(((Devices) mapStorage.get(typeDevise)).getAmount() - amount);
+                    customersBasket.add(new Devices(typeDevise, ((Devices) mapStorage.get(typeDevise)).getPrice(), amount));
+                }
+                else
+                    System.out.println("Возникли неполадки, повторите попытку позже");
+
             } while (true);
 
         } catch (IOException e) {
@@ -74,51 +78,43 @@ public class ChooseDevices {
         return mapStorage;
     }
 
-    /* Fill storage`s map with default values */
+
+
+    /* Fill storage`s map and cart`s object with values from JSON file */
+    private void fillDataFromJSON(){
+        /* Enter your code */
+    }
+
+    /* Fill storage`s map and cart`s object with values from SQL file */
+    private void fillDataFromSQL(){
+        sqlWorker = new SQLWorker(
+                Objects.requireNonNull(ChooseDevices.class.getResource("/database/dataSQL.db")).getPath());
+        mapStorage = sqlWorker.getStorageData();
+        customersBasket = sqlWorker.getCartData();
+    }
+
+    /* Fill storage`s map and cart`s object with default values */
     @Deprecated
-    private void defaultFillStorage(){
+    private void fillDataDefault(){
         mapStorage.put(TypeOfDevices.HEADPHONE, new Devices(TypeOfDevices.HEADPHONE, 50., 2));
         mapStorage.put(TypeOfDevices.LAPTOP, new Devices(TypeOfDevices.LAPTOP, 500., 4));
         mapStorage.put(TypeOfDevices.PHONE, new Devices(TypeOfDevices.PHONE, 100., 6));
-    }
 
-    /* Fill storage`s map with values from JSON file */
-    private void fillStorageFromJSON(){
-        /* Enter code for parse JSON file and fill mapStorage */
-    }
-
-    /* Fill storage`s map with values from SQL file */
-    private void fillStorageFromSQL(){
-        /* Enter code for parse SQL file and fill mapStorage */
-    }
-
-    /* Fill cart`s object with default values */
-    @Deprecated
-    private void defaultFillCart(){
         customersBasket = new CustomersBasket(
                 new Devices(TypeOfDevices.HEADPHONE, 50., 1),
                 new Devices(TypeOfDevices.LAPTOP, 400., 2)
         );
     }
 
-    /* Fill cart`s object with values from JSON file */
-    private void fillCartFromJSON(){
-        /* Enter code for parse JSON file and fill customersBasket */
-    }
-
-    /* Fill cart`s object with values from SQL file */
-    private void fillCartFromSQL(){
-        /* Enter code for parse SQL file and fill customersBasket */
-    }
-
     /* Update file.json (storage and cart) */
-    private void updateStorageAndCartJSON(){
+    private boolean updateStorageAndCartJSON(){
         /* Enter your code */
+        return false;
     }
 
-    /* Update file.sql (storage and cart) */
-    private void updateStorageAndCartSQL(){
-        /* Enter your code for update SQL database */
+    /* Update file.db (storage and cart) */
+    private boolean updateStorageAndCartSQL(TypeOfDevices type, int deltaAmount){
+        return sqlWorker.updateData(type, deltaAmount);
     }
 
     /* Parse String to positive int (natural number) and return -1, if String have invalid format */
