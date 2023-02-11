@@ -18,7 +18,7 @@ public class ChangeAmountOfDevice {
         ClassLoader classLoader = ChangeAmountOfDevice.class.getClassLoader();
 
         JsonFactory jsonFactory = new JsonFactory();
-        JsonParser jsonParser = jsonFactory.createParser(new File(Objects.requireNonNull(classLoader.getResource("mapJson.json")).getFile()));
+        JsonParser jsonParser = jsonFactory.createParser(new File(Objects.requireNonNull(classLoader.getResource("jsonFile/mapJsonStorage.json")).getFile()));
 
         // find token which is FIELD_NAME. if it`s true, we`ll find field amount and update info
         while (jsonParser.nextToken() != null) {

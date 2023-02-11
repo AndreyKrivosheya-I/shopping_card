@@ -8,10 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class CustomersBasket {
+public class  CustomersBasket {
 
     /* Contain info about all device into shopping cart(SC) */
-    private List<Devices> cart;
+    private final List<Devices> cart;
 
     public CustomersBasket() {
         cart = new ArrayList<>();
@@ -56,7 +56,7 @@ public class CustomersBasket {
         return cart;
     }
 
-    public int getAmountByType(TypeOfDevices type){
+    public int getAmountByType(TypeOfDevices type) {
         return Objects.requireNonNull(cart.stream()
                 .filter(d -> d.getTypeOfDevices() == type)
                 .findFirst()

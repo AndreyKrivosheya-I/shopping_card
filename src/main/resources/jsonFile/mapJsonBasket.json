@@ -1,0 +1,12 @@
+{
+  "LAPTOP" : {
+    "price" : 500.0,
+    "amount" : 2,
+    "typeOfDevices" : "LAPTOP"
+  },
+  "PHONE" : {
+    "price" : 100.0,
+    "amount" : 1,
+    "typeOfDevices" : "PHONE"
+  }
+}

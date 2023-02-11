@@ -8,15 +8,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class WriterToFileJSON {
+    public final String pathToTheStorageJSONFile = "src/main/resources/jsonFile/mapJsonStorage.json";
+    public final String pathToTheBasketJSONFile = "src/main/resources/jsonFile/mapJsonBasket.json";
 
     // Method for write to file.json
-    public void writeToJSONFile(Map<Object, Object> map) {
+    public void writeToJSONFile(Map<Object, Object> map, String path) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Map<Object, Object> mapJSON = new LinkedHashMap<>(map);
 
         try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("src/main/resources/mapJson.json"), mapJSON);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(path), mapJSON);
         } catch (IOException e) {
             e.printStackTrace();
         }

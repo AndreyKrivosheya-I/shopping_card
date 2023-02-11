@@ -11,7 +11,7 @@ import java.util.Objects;
 public class ReaderFileJson {
 
     //Method for read file JSON
-    public void readFileJson(Map<Object, Object> map) {
+    public void readFileJson(String path) {
 
         ClassLoader classLoader = WriterToFileJSON.class.getClassLoader();
 
@@ -19,8 +19,8 @@ public class ReaderFileJson {
         Map<Object, Object> mapJSON;
 
         try {
-            mapJSON = objectMapper.readValue(new File(Objects.requireNonNull(classLoader.getResource("mapJson.json")).getFile()),
-                    new TypeReference<Map<Object, Object>>() {
+            mapJSON = objectMapper.readValue(new File(Objects.requireNonNull(classLoader.getResource("jsonFile/mapJsonBasket.json")).getFile()),
+                    new TypeReference<>() {
                     }
             );
 

@@ -108,7 +108,7 @@ public class SQLWorker {
 
             statement.execute("BEGIN TRANSACTION;");
 
-            String queryFormat = "UPDATE %s SET %s = %s + %d WHERE %s = (SELECT %s FROM %s WHERE %s = %s);";
+            String queryFormat = "UPDATE %s SET %s = %s + %d WHERE %s = (SELECT %s FROM %s WHERE %s = '%s');";
             String queryUpdateStorage = String.format(queryFormat, SQLConst.STORAGE_TABLE_NAME,
                     SQLConst.STORAGE_AMOUNT, SQLConst.STORAGE_AMOUNT, -deltaAmount, SQLConst.STORAGE_DEVICE_ID,
                     SQLConst.DEVICE_ID, SQLConst.DEVICE_TABLE_NAME, SQLConst.DEVICE_NAME, name);
@@ -120,7 +120,7 @@ public class SQLWorker {
             int changeInCart = statement.executeUpdate(queryUpdateCart);
 
             if (changeInCart == 0){
-                String queryInsert = String.format("INSERT INTO %s(%s, %s) VALUES (%d, (SELECT %s FROM %s WHERE %s = %s));",
+                String queryInsert = String.format("INSERT INTO %s(%s, %s) VALUES (%d, (SELECT %s FROM %s WHERE %s = '%s'));",
                         SQLConst.CART_TABLE_NAME, SQLConst.CART_AMOUNT, SQLConst.CART_DEVICE_ID, deltaAmount,
                         SQLConst.DEVICE_ID, SQLConst.DEVICE_TABLE_NAME, SQLConst.DEVICE_NAME, name);
 
